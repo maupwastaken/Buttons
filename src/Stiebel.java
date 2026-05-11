@@ -12,14 +12,11 @@ import basis.*;
 
 import java.awt.*;
 
-public class Stiebel extends Fenster implements KnopfLauscher, RollbalkenLauscher, ListAuswahlLauscher {
-    private Knopf ende, knopf1, knopf2;
-    private BeschriftungsFeld label1;
-    private Rollbalken rollbalken;
-    private ZahlenFeld zahlenfeld;
-    private ListAuswahl liste;
-    private Stift stift;
-    private TextFeld text1, text2;
+public class Stiebel extends Fenster implements KnopfLauscher {
+    Gefahr gefahr;
+    PopUp popUp;
+    Tidy tidy;
+    WallpaperChange wallpaperChange;
 
     public Stiebel() {
         this.initGui();
@@ -28,58 +25,23 @@ public class Stiebel extends Fenster implements KnopfLauscher, RollbalkenLausche
     public void initGui() {
         this.setzeGroesse(600, 500);
         this.setzeTitel("Stiebel");
-        ende = new Knopf("Ende", 490, 460, 100, 30);
-        ende.setzeKnopfLauscher(this);
-        label1 = new BeschriftungsFeld("Wie heißt das Programmm?", 10, 10, 580, 30);
-        text1 = new TextFeld(10, 170, 120, 30);
-        text1.setzeText("Liste Klick");
-        text2 = new TextFeld(10, 200, 120, 30);
-        text2.setzeText("Liste Doppelklick");
-        rollbalken = new Rollbalken(true, 10, 420, 120, 30);
-        rollbalken.setzeWerte(1, 5, 3);    //MIN,MAX,Start
-        rollbalken.setzeRollbalkenLauscher(this);
-        zahlenfeld = new ZahlenFeld(10, 380, 120, 30);
-        zahlenfeld.setzeZahl(rollbalken.wert());
-        liste = new ListAuswahl(10, 230, 120, 140);
-        liste.setzeListAuswahlLauscher(this);
-        liste.fuegeAn("Auswahl1");
-        liste.fuegeAn("Auswahl2");
-        liste.fuegeAn("Auswahl3");
-        liste.fuegeAn("Auswahl4");
-        knopf2 = new Knopf("macht nix", 10, 460, 120, 30);
-        knopf2.setzeKnopfLauscher(this);
-        knopf1 = new Knopf("macht nix", 10, 130, 120, 30);
-        knopf1.setzeKnopfLauscher(this);
-        stift = new Stift();
+
+        gefahr = new Gefahr("Gefahr", 100, 100, 100, 30);
+        popUp = new PopUp("Pop-up", 100, 140, 100, 30);
+        tidy = new Tidy("Tidy", 100, 180, 100, 30);
+        wallpaperChange = new WallpaperChange("Wallpaper", 100, 220, 100, 30);
     }
 
     @Override
     public void bearbeiteKnopfDruck(Knopf k) {
-        if (k == ende) {
-            this.gibFrei();
-        } else if (k == knopf2) {
-        } else if (k == knopf1) {
-        }
-    }
-
-    @Override
-    public void bearbeiteRollbalkenBewegung(Rollbalken k) {
-        if (k == rollbalken) {
-            zahlenfeld.setzeZahl(rollbalken.wert());
-        }
-    }
-
-    @Override
-    public void bearbeiteAuswahl(ListAuswahl k) {
-        if (k == liste) {
-            text1.setzeText(liste.gewaehlterText());
-        }
-    }
-
-    @Override
-    public void bearbeiteDoppelklick(ListAuswahl k) {
-        if (k == liste) {
-            text2.setzeText(liste.gewaehlterText());
+        if (k == gefahr) {
+            gefahr.execute();
+        } else if (k == popUp) {
+            popUp.execute();
+        } else if (k == tidy) {
+            tidy.execute();
+        } else if (k == wallpaperChange) {
+            wallpaperChange.execute();
         }
     }
 }
