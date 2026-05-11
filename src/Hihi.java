@@ -1,9 +1,6 @@
 import basis.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JButton;
 
-public class Hihi extends Knopf {
+public class Hihi extends Knopf implements MausLauscherErweitert {
     private int breite;
     private int hoehe;
 
@@ -12,44 +9,38 @@ public class Hihi extends Knopf {
         this.breite = w;
         this.hoehe = h;
         
-        try {
-            // Some versions of basis use a different field name or a getter
-            JButton b = null;
-            try {
-                java.lang.reflect.Field field = Knopf.class.getDeclaredField("knopf");
-                field.setAccessible(true);
-                b = (JButton) field.get(this);
-            } catch (Exception e1) {
-                try {
-                    java.lang.reflect.Field field = Knopf.class.getDeclaredField("b");
-                    field.setAccessible(true);
-                    b = (JButton) field.get(this);
-                } catch (Exception e2) {
-                    for (java.lang.reflect.Field f : Knopf.class.getDeclaredFields()) {
-                        if (JButton.class.isAssignableFrom(f.getType())) {
-                            f.setAccessible(true);
-                            b = (JButton) f.get(this);
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (b != null) {
-                b.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
-                        teleport();
-                    }
-                });
-            }
-        } catch (Exception e) {
-        }
+        // Register this instance as an extended mouse listener to catch "mouse enter" events
+        this.setzeMausLauscherErweitert(this);
     }
 
     private void teleport() {
         int newX = (int) (Math.random() * (600 - breite));
         int newY = (int) (Math.random() * (500 - hoehe));
         this.setzePosition(newX, newY);
+    }
+
+    @Override
+    public void bearbeiteMausHinein(Object o, int x, int y) {
+        teleport();
+    }
+
+    @Override
+    public void bearbeiteMausHeraus(Object o, int x, int y) {
+        // Not needed
+    }
+
+    @Override
+    public void bearbeiteMausKlick(Object o, int x, int y) {
+        // Not needed
+    }
+
+    @Override
+    public void bearbeiteMausKlickRechts(Object o, int x, int y) {
+        // Not needed
+    }
+
+    @Override
+    public void bearbeiteDoppelKlick(Object o, int x, int y) {
+        // Not needed
     }
 }
