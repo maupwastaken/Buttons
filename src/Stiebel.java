@@ -14,9 +14,7 @@ import java.awt.*;
 
 public class Stiebel extends Fenster implements KnopfLauscher {
     Gefahr gefahr;
-    PopUp popUp;
-    Tidy tidy;
-    WallpaperChange wallpaperChange;
+    Hihi hihi;
 
     public Stiebel() {
         this.initGui();
@@ -27,21 +25,18 @@ public class Stiebel extends Fenster implements KnopfLauscher {
         this.setzeTitel("Stiebel");
 
         gefahr = new Gefahr("Gefahr", 100, 100, 100, 30);
-        popUp = new PopUp("Pop-up", 100, 140, 100, 30);
-        tidy = new Tidy("Tidy", 100, 180, 100, 30);
-        wallpaperChange = new WallpaperChange("Wallpaper", 100, 220, 100, 30);
+        gefahr.setzeKnopfLauscher(this);
+
+        hihi = new Hihi("hihi", 250, 200, 100, 30);
+        hihi.setzeKnopfLauscher(this);
     }
 
     @Override
     public void bearbeiteKnopfDruck(Knopf k) {
         if (k == gefahr) {
             gefahr.execute();
-        } else if (k == popUp) {
-            popUp.execute();
-        } else if (k == tidy) {
-            tidy.execute();
-        } else if (k == wallpaperChange) {
-            wallpaperChange.execute();
+        } else if (k == hihi) {
+            hihi.setzeText("Haha!");
         }
     }
 }
